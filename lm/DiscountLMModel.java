@@ -15,6 +15,7 @@ public class DiscountLMModel {
 	private HashMap<String, Double> uniProb = null;
 	private HashMap<String, HashMap<String, Double>> biProb = null;
 	private HashMap<String, Double> alpha = null;
+	private HashMap<String, ArrayList<Range>> wordDistributions = new HashMap<>();
 	
 
     public DiscountLMModel(String filename, double discount){
@@ -29,11 +30,9 @@ public class DiscountLMModel {
 
 		uniCount.put("<s>", 0.0);
 		uniCount.put("</s>", 0.0);
-		uniCount.put("<UNK>", 0.0);
 
 		uniProb.put("<s>", 0.0);
 		uniProb.put("</s>", 0.0);
-		uniProb.put("<UNK>", 0.0);
 
 		train();
     }
@@ -48,26 +47,48 @@ public class DiscountLMModel {
 		 fillAlpha();
 	}
 
-	public String generateSentence(){
-		String currentWord = "<s>";
-		double rangeStart = 0.0;
-		ArrayList<Range> ranges = new ArrayList<>();
-		while(!currentWord.equals("</s>")){
-			HashMap<String, Double> distribution = biProb.get(currentWord);
-			for (String key:distribution.keySet()){
-				double rangeEnd = rangeStart + distribution.get(key);
-				Range toAdd = new Range(rangeStart, rangeEnd, key);
-				ranges.add(toAdd);
-			}
+	public String generateParagraph(){
+		Random r = new Random();
+		int numSentences = r.nextInt(50);
+		String paragraph = "";
 
+		for(int i = 0; i < numSentences; i++){
+			paragraph += generateSentence();
 		}
 
-		// random generation
+		return paragraph;
+	}
+
+	public String generateSentence(){
+		String currentWord = "<s>";
+		Double curMaxProb = 0.0;
 		Random r = new Random();
-		double randomNum = r.nextDouble();
+		String finalSentence = "";
 
+		while(!currentWord.equals("</s>")){
+			double rangeStart = 0.0;
+			HashMap<String, Double> wordDistribution = biProb.get(currentWord);
+			ArrayList<Range> ranges = new ArrayList<>();
+			for (String key:wordDistribution.keySet()){
+				double curBiProb = wordDistribution.get(key);
+				double rangeEnd = rangeStart + curBiProb;
+				Range toAdd = new Range(rangeStart, rangeEnd, key);
+				ranges.add(toAdd);
+				rangeStart += curBiProb;
+				curMaxProb = rangeEnd;
+			}
+			System.out.println("max Prob: " + curMaxProb);
+			wordDistributions.put(currentWord, ranges);
+			double randomNum = curMaxProb * r.nextDouble();
+			currentWord = binarySearch(ranges, 0, ranges.size()-1, randomNum);
+			System.out.println("next new word: " + currentWord + "\n\n") ;
 
-		return binarySearch(ranges, 0, ranges.size()-1, randomNum);
+			if(!currentWord.equals("</s>")){
+				finalSentence += currentWord + " ";
+			}
+		}
+
+		return finalSentence;
 	}
 
 	String binarySearch(ArrayList<Range> arr, int l, int r, double randNum) { 
@@ -188,12 +209,7 @@ public class DiscountLMModel {
 				// collect unigram counts from training set
                 for(int i = 0; i<sentence.length; i++){
 					// if first occurence of word
-					if(!uniCount.containsKey(sentence[i]) && !wordOccuredOnce.contains(sentence[i])){
-						wordOccuredOnce.add(sentence[i]);
-						sentence[i] = "<UNK>";
-						incrementValue(uniCount, "<UNK>");
-						tokenCount++;
-					} else if (!uniCount.containsKey(sentence[i]) && wordOccuredOnce.contains(sentence[i])) {
+					if (!uniCount.containsKey(sentence[i]) && wordOccuredOnce.contains(sentence[i])) {
 						uniCount.put(sentence[i], 1.0);
 						tokenCount++;
 						wordOccuredOnce.remove(sentence[i]);
@@ -320,6 +336,6 @@ public class DiscountLMModel {
 	
 	public static void main(String[] args) {
 		DiscountLMModel test = new DiscountLMModel("data/luke_skywalker_dialogue.txt", 0.5);
-		System.out.println(test.generateSentence());
+		System.out.println(test.generateParagraph());
 	}
 }

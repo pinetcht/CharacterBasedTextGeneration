@@ -11,6 +11,22 @@ public class Range {
         this.word = word;
     }
 
+    public double getLow() {
+        return this.low;
+    }
+
+
+    public double getHigh() {
+        return this.high;
+    }
+
+    public String getWord() {
+        return this.word;
+    }
+
+    public String toString(){
+        return "(" + this.low + ", " + this.high + ", " + this.word + ")";
+    }
 
     public String contains(double number){
         if(number >= high){
