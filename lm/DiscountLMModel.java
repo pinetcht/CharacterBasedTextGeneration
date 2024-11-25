@@ -77,12 +77,10 @@ public class DiscountLMModel {
 				rangeStart += curBiProb;
 				curMaxProb = rangeEnd;
 			}
-			System.out.println("max Prob: " + curMaxProb);
+
 			wordDistributions.put(currentWord, ranges);
 			double randomNum = curMaxProb * r.nextDouble();
 			currentWord = binarySearch(ranges, 0, ranges.size()-1, randomNum);
-			System.out.println("next new word: " + currentWord + "\n\n") ;
-
 			if(!currentWord.equals("</s>")){
 				finalSentence += currentWord + " ";
 			}
@@ -335,7 +333,30 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		DiscountLMModel test = new DiscountLMModel("data/luke_skywalker_dialogue.txt", 0.5);
-		System.out.println(test.generateParagraph());
+		ArrayList<String> characters = new ArrayList<>();
+		characters.add("luke_skywalker");
+		characters.add("michael");
+		characters.add("phoebe_buffay");
+		Random r = new Random();
+
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/randomDialogue.txt"))){
+			try(BufferedWriter charWriter = new BufferedWriter(new FileWriter("data/characters.txt"))){
+				for(int i = 0; i < 50; i++){
+					int randIndex = r.nextInt(3);
+					String curCharacter = characters.get(randIndex);
+					charWriter.write(i + ": " + curCharacter + "\n");
+					
+					String filename = String.format("data/%s_dialogue.txt", curCharacter);
+					DiscountLMModel test = new DiscountLMModel(filename, 0.5);
+					writer.write(i + ": " + test.generateParagraph() + "\n");
+					
+				}
+			}
+			catch(IOException f){
+				f.printStackTrace();
+			}
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 }
