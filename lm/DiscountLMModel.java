@@ -65,7 +65,7 @@ public class DiscountLMModel {
 		Random r = new Random();
 		String finalSentence = "";
 
-		while(!currentWord.equals("</s>")){
+		while(!currentWord.equals("</s>") && !currentWord.equals("no string")){
 			double rangeStart = 0.0;
 			HashMap<String, Double> wordDistribution = biProb.get(currentWord);
 			ArrayList<Range> ranges = new ArrayList<>();
@@ -83,7 +83,7 @@ public class DiscountLMModel {
 			currentWord = binarySearch(ranges, 0, ranges.size()-1, randomNum);
 			System.out.println("next new word: " + currentWord + "\n\n") ;
 
-			if(!currentWord.equals("</s>")){
+			if(!currentWord.equals("</s>") && !currentWord.equals("no string")){
 				finalSentence += currentWord + " ";
 			}
 		}
@@ -335,7 +335,19 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		DiscountLMModel test = new DiscountLMModel("data/luke_skywalker_dialogue.txt", 0.5);
-		System.out.println(test.generateParagraph());
+		// DiscountLMModel luke = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.5);
+		// DiscountLMModel michael = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.5);
+		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
+		phoebe.generateSentence();
+
+		// try (BufferedWriter michaelWriter = new BufferedWriter(new FileWriter("./perplexity/phoebe.txt"))) {
+		// 	for(int i = 0; i < 10000; i++){
+		// 		michaelWriter.write(phoebe.generateSentence());
+		// 		michaelWriter.write("\n");
+		// 	}
+		// } catch (IOException e) {
+		// 	e.printStackTrace();
+		// }
+		
 	}
 }
