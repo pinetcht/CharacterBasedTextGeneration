@@ -65,7 +65,7 @@ public class DiscountLMModel {
 		Random r = new Random();
 		String finalSentence = "";
 
-		while(!currentWord.equals("</s>")){
+		while(!currentWord.equals("</s>") && !currentWord.equals("no string")){
 			double rangeStart = 0.0;
 			HashMap<String, Double> wordDistribution = biProb.get(currentWord);
 			ArrayList<Range> ranges = new ArrayList<>();
@@ -81,7 +81,7 @@ public class DiscountLMModel {
 			wordDistributions.put(currentWord, ranges);
 			double randomNum = curMaxProb * r.nextDouble();
 			currentWord = binarySearch(ranges, 0, ranges.size()-1, randomNum);
-			if(!currentWord.equals("</s>")){
+			if(!currentWord.equals("</s>") && !currentWord.equals("no string")){
 				finalSentence += currentWord + " ";
 			}
 		}
@@ -339,22 +339,35 @@ public class DiscountLMModel {
 		characters.add("phoebe_buffay");
 		Random r = new Random();
 
-		try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/randomDialogue.txt"))){
-			try(BufferedWriter charWriter = new BufferedWriter(new FileWriter("data/characters.txt"))){
-				for(int i = 0; i < 50; i++){
-					int randIndex = r.nextInt(3);
-					String curCharacter = characters.get(randIndex);
-					charWriter.write(i + ": " + curCharacter + "\n");
+		// try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/randomDialogue.txt"))){
+		// 	try(BufferedWriter charWriter = new BufferedWriter(new FileWriter("data/characters.txt"))){
+		// 		for(int i = 0; i < 50; i++){
+		// 			int randIndex = r.nextInt(3);
+		// 			String curCharacter = characters.get(randIndex);
+		// 			charWriter.write(i + ": " + curCharacter + "\n");
 					
-					String filename = String.format("data/%s_dialogue.txt", curCharacter);
-					DiscountLMModel test = new DiscountLMModel(filename, 0.5);
-					writer.write(i + ": " + test.generateParagraph() + "\n");
+		// 			String filename = String.format("data/%s_dialogue.txt", curCharacter);
+		// 			DiscountLMModel test = new DiscountLMModel(filename, 0.5);
+		// 			writer.write(i + ": " + test.generateParagraph() + "\n");
 					
-				}
+		// 		}
+		// 	}
+		// 	catch(IOException f){
+		// 		f.printStackTrace();
+		// 	}
+		// } catch(IOException e){
+		// 	e.printStackTrace();
+		// }
+
+		try(BufferedWriter labelSentWriter = new BufferedWriter(new FileWriter("data/labelWithSentence.txt"))){
+			for(int i = 0; i < 10000; i++){
+				int randIndex = r.nextInt(3);
+				String curCharacter = characters.get(randIndex);
+				String filename = String.format("data/%s_dialogue.txt", curCharacter);
+				DiscountLMModel test = new DiscountLMModel(filename, 0.5);
+				labelSentWriter.write(curCharacter + "\t" + test.generateSentence() + "\n");
 			}
-			catch(IOException f){
-				f.printStackTrace();
-			}
+			
 		} catch(IOException e){
 			e.printStackTrace();
 		}
