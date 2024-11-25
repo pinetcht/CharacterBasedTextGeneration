@@ -30,9 +30,11 @@ public class DiscountLMModel {
 
 		uniCount.put("<s>", 0.0);
 		uniCount.put("</s>", 0.0);
+		uniCount.put("<UNK>", 0.0);
 
 		uniProb.put("<s>", 0.0);
 		uniProb.put("</s>", 0.0);
+		uniProb.put("<UNK>", 0.0);
 
 		train();
     }
@@ -209,7 +211,12 @@ public class DiscountLMModel {
 				// collect unigram counts from training set
                 for(int i = 0; i<sentence.length; i++){
 					// if first occurence of word
-					if (!uniCount.containsKey(sentence[i]) && wordOccuredOnce.contains(sentence[i])) {
+					if(!uniCount.containsKey(sentence[i]) && !wordOccuredOnce.contains(sentence[i])){
+						wordOccuredOnce.add(sentence[i]);
+						sentence[i] = "<UNK>";
+						incrementValue(uniCount, "<UNK>");
+						tokenCount++;
+					} else if (!uniCount.containsKey(sentence[i]) && wordOccuredOnce.contains(sentence[i])) {
 						uniCount.put(sentence[i], 1.0);
 						tokenCount++;
 						wordOccuredOnce.remove(sentence[i]);
@@ -335,10 +342,43 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		// DiscountLMModel luke = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.5);
-		// DiscountLMModel michael = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.5);
-		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
-		phoebe.generateSentence();
+		DiscountLMModel luke = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.99);
+		DiscountLMModel luke1 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.9);
+		DiscountLMModel luke2 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.75);
+		DiscountLMModel luke3 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.5);
+		DiscountLMModel luke4 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.25);
+		DiscountLMModel luke5 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.1);
+		DiscountLMModel luke6 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.01);
+
+
+		System.out.println("discount 0.99 luke perplexity: " + luke.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount 0.9 luke perplexity: " + luke1.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount 0.75 luke perplexity: " + luke2.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount 0.5 luke perplexity: " + luke3.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount 0.25 luke perplexity: " + luke4.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount 0.1 luke perplexity: " + luke5.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount 0.01 luke perplexity: " + luke6.getPerplexity("perplexity/luke.txt"));
+
+		System.out.println();
+
+		DiscountLMModel michael = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.99);
+		DiscountLMModel michael1 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.9);
+		DiscountLMModel michael2 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.75);
+		DiscountLMModel michael3 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.5);
+		DiscountLMModel michael4 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.25);
+		DiscountLMModel michael5 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.1);
+		DiscountLMModel michael6 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.01);
+
+		System.out.println("discount 0.99 michael perplexity: " + michael.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount 0.9 michael perplexity: " + michael1.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount 0.75 michael perplexity: " + michael2.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount 0.5 michael perplexity: " + michael3.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount 0.25 michael perplexity: " + michael4.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount 0.1 michael perplexity: " + michael5.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount 0.01 michael perplexity: " + michael6.getPerplexity("perplexity/michael.txt"));
+
+		// DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
+		// phoebe.generateSentence();
 
 		// try (BufferedWriter michaelWriter = new BufferedWriter(new FileWriter("./perplexity/phoebe.txt"))) {
 		// 	for(int i = 0; i < 10000; i++){
