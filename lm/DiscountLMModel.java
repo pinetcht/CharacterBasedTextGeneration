@@ -333,13 +333,13 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
-		System.out.println(phoebe.generateParagraph());
-		// ArrayList<String> characters = new ArrayList<>();
-		// characters.add("luke_skywalker");
-		// characters.add("michael");
-		// characters.add("phoebe_buffay");
-		// Random r = new Random();
+		// DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
+		// System.out.println(phoebe.generateParagraph());
+		ArrayList<String> characters = new ArrayList<>();
+		characters.add("luke");
+		characters.add("michael");
+		characters.add("phoebe");
+		Random r = new Random();
 
 		// try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/randomDialogue.txt"))){
 		// 	try(BufferedWriter charWriter = new BufferedWriter(new FileWriter("data/characters.txt"))){
@@ -361,17 +361,17 @@ public class DiscountLMModel {
 		// 	e.printStackTrace();
 		// }
 
-		// try(BufferedWriter labelSentWriter = new BufferedWriter(new FileWriter("data/labelWithSentence.txt"))){
-		// 	for(int i = 0; i < 10000; i++){
-		// 		int randIndex = r.nextInt(3);
-		// 		String curCharacter = characters.get(randIndex);
-		// 		String filename = String.format("data/%s_dialogue.txt", curCharacter);
-		// 		DiscountLMModel test = new DiscountLMModel(filename, 0.5);
-		// 		labelSentWriter.write(curCharacter + "\t" + test.generateSentence() + "\n");
-		// 	}
+		try(BufferedWriter labelSentWriter = new BufferedWriter(new FileWriter("data/labelWithSentence.txt"))){
+			for(int i = 0; i < 10000; i++){
+				int randIndex = r.nextInt(3);
+				String curCharacter = characters.get(randIndex);
+				String filename = String.format("data/preprocessed/%s_preprocessed.txt", curCharacter);
+				DiscountLMModel test = new DiscountLMModel(filename, 0.5);
+				labelSentWriter.write(curCharacter + "\t" + test.generateSentence() + "\n");
+			}
 			
-		// } catch(IOException e){
-		// 	e.printStackTrace();
-		// }
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 }

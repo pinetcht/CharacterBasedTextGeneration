@@ -68,8 +68,6 @@ public class NBModel {
             e.printStackTrace();
         }
 
-        System.out.println("phoebe, michael, luke " + phoebeCounts + " " + michaelCounts + " " + lukeCounts + "\n");
-
         double vocabSize = vocab.size();
         smoothingFactor = lambda*vocabSize;
 
@@ -151,12 +149,21 @@ public class NBModel {
             }
         }
 
-        System.out.println("matches: " + matches);
-        System.out.println("actual labels: " + actualLabels.size());
-        System.out.println("with lambda: " + lambda + "\taccuracy is: " + matches/actualLabels.size());
+        
+        System.out.println(matches + "\t" +  actualLabels.size() + "\t" + lambda + "\t" + matches/actualLabels.size() );
     }
 
     public static void main(String[] args) {
+        System.out.println("correct\tall sentences\tlambda\taccuracy");
+        new NBModel("data/training.txt", "data/test.txt", 5);
+        new NBModel("data/training.txt", "data/test.txt", 3);
+        new NBModel("data/training.txt", "data/test.txt", 1.5);
+        new NBModel("data/training.txt", "data/test.txt", 1);
         new NBModel("data/training.txt", "data/test.txt", 0.1);
+        new NBModel("data/training.txt", "data/test.txt", 0.01);
+        new NBModel("data/training.txt", "data/test.txt", 0.001);
+        new NBModel("data/training.txt", "data/test.txt", 0.0001);
+        new NBModel("data/training.txt", "data/test.txt", 0.00001);
+        
     }
 }
