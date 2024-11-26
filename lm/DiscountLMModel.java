@@ -335,7 +335,7 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		DiscountLMModel test = new DiscountLMModel("data/luke_skywalker_dialogue.txt", 0.5);
+		DiscountLMModel test = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
 		System.out.println(test.generateParagraph());
 	}
 }
