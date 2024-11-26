@@ -333,8 +333,72 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
-		System.out.println(phoebe.generateParagraph());
+		DiscountLMModel luke = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.99);
+		DiscountLMModel luke1 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.9);
+		DiscountLMModel luke2 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.75);
+		DiscountLMModel luke3 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.5);
+		DiscountLMModel luke4 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.25);
+		DiscountLMModel luke5 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.1);
+		DiscountLMModel luke6 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.01);
+		DiscountLMModel luke7 = new DiscountLMModel("data/preprocessed/luke_preprocessed.txt", 0.001);
+
+
+		DiscountLMModel michael = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.99);
+		DiscountLMModel michael1 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.9);
+		DiscountLMModel michael2 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.75);
+		DiscountLMModel michael3 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.5);
+		DiscountLMModel michael4 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.25);
+		DiscountLMModel michael5 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.1);
+		DiscountLMModel michael6 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.01);
+		DiscountLMModel michael7 = new DiscountLMModel("data/preprocessed/michael_preprocessed.txt", 0.001);
+
+
+		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.99);
+		DiscountLMModel phoebe1 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.9);
+		DiscountLMModel phoebe2 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.75);
+		DiscountLMModel phoebe3 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
+		DiscountLMModel phoebe4 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.25);
+		DiscountLMModel phoebe5 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.1);
+		DiscountLMModel phoebe6 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.01);
+		DiscountLMModel phoebe7 = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.001);
+
+
+		System.out.println("phoebe:");
+		System.out.println("discount: 0.99 \t" + phoebe.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.9 \t" + phoebe1.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.75 \t" + phoebe2.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.5 \t" + phoebe3.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.25 \t" + phoebe4.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.1 \t" + phoebe5.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.01 \t" + phoebe6.getPerplexity("perplexity/phoebe.txt"));
+		System.out.println("discount: 0.001 \t" + phoebe7.getPerplexity("perplexity/phoebe.txt"));
+
+		System.out.println();
+
+		System.out.println("michael: ");
+		System.out.println("discount: 0.99 \t" + michael.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.9 \t" + michael1.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.75 \t" + michael2.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.5 \t" + michael3.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.25 \t" + michael4.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.1 \t" + michael5.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.01 \t" + michael6.getPerplexity("perplexity/michael.txt"));
+		System.out.println("discount: 0.001 \t" + michael7.getPerplexity("perplexity/michael.txt"));
+
+		System.out.println();
+
+		System.out.println("luke: ");
+		System.out.println("discount: 0.99 \t" + luke.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.9 \t" + luke1.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.75 \t" + luke2.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.5 \t" + luke3.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.25 \t" + luke4.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.1 \t" + luke5.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.01 \t" + luke6.getPerplexity("perplexity/luke.txt"));
+		System.out.println("discount: 0.001 \t" + luke7.getPerplexity("perplexity/luke.txt"));
+
+
+
 		// ArrayList<String> characters = new ArrayList<>();
 		// characters.add("luke_skywalker");
 		// characters.add("michael");
