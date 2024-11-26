@@ -334,7 +334,13 @@ public class DiscountLMModel {
 	
 	public static void main(String[] args) {
 		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
-		System.out.println(phoebe.generateParagraph());
+			try(BufferedWriter writer = new BufferedWriter(new FileWriter("phoebe.txt"))){
+				for(int i = 0; i < 10000; i++){
+					writer.write(phoebe.generateSentence() + "\n");
+				}
+			} catch (IOException f) {
+				f.printStackTrace();
+			}
 		// ArrayList<String> characters = new ArrayList<>();
 		// characters.add("luke_skywalker");
 		// characters.add("michael");
