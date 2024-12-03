@@ -1,5 +1,11 @@
 package lm;
 
+/**
+ * 
+ * Class to represent a range with lowest and highest n-gram probability. 
+ * Has word associated with the range of probability.
+ * 
+ */
 public class Range {
     private double low;
     private double high;
