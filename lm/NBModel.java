@@ -150,7 +150,7 @@ public class NBModel {
         }
 
         
-        System.out.println(matches + "\t" +  actualLabels.size() + "\t" + lambda + "\t" + matches/actualLabels.size() );
+        System.out.println(matches + "\t\t" +  actualLabels.size() + "\t" + lambda + "\t" + matches/actualLabels.size() );
     }
 
     public static void main(String[] args) {
