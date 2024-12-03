@@ -358,6 +358,45 @@ public class DiscountLMModel {
     }
 	
 	public static void main(String[] args) {
-		DiscountLMModel phoebe = new DiscountLMModel("data/preprocessed/phoebe_preprocessed.txt", 0.5);
+		ArrayList<String> characters = new ArrayList<>();
+		characters.add("luke");
+		characters.add("michael");
+		characters.add("phoebe");
+		Random r = new Random();
+
+		// make separate character and dialogue file for human evaluation
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/randomDialogue.txt"))){
+			try(BufferedWriter charWriter = new BufferedWriter(new FileWriter("data/characters.txt"))){
+				for(int i = 0; i < 50; i++){
+					int randIndex = r.nextInt(3);
+					String curCharacter = characters.get(randIndex);
+					charWriter.write(i + ": " + curCharacter + "\n");
+					
+					String filename = String.format("data/%s_dialogue.txt", curCharacter);
+					DiscountLMModel test = new DiscountLMModel(filename, 0.5);
+					writer.write(i + ": " + test.generateParagraph() + "\n");
+					
+				}
+			}
+			catch(IOException f){
+				f.printStackTrace();
+			}
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		// generate file with character and dialogue sentence for classification model
+		try(BufferedWriter labelSentWriter = new BufferedWriter(new FileWriter("data/labelWithSentence.txt"))){
+			for(int i = 0; i < 10000; i++){
+				int randIndex = r.nextInt(3);
+				String curCharacter = characters.get(randIndex);
+				String filename = String.format("data/preprocessed/%s_preprocessed.txt", curCharacter);
+				DiscountLMModel test = new DiscountLMModel(filename, 0.5);
+				labelSentWriter.write(curCharacter + "\t" + test.generateSentence() + "\n");
+			}
+			
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 }
