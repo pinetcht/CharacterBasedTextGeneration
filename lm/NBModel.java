@@ -20,6 +20,13 @@ public class NBModel {
     double michaelLabel;
     double lukeLabel;
 
+    /**
+     *  paramaterized constructor 
+     * 
+     * @param trainingData String; the filename of our training data
+     * @param testSentences String; the sentences that we will be running our classifier on
+     * @param lambda double - our lambda value for smoothing
+     */
     public NBModel(String trainingData, String testSentences, double lambda){
         this.trainingData = trainingData;
         this.testSentences = testSentences;
@@ -30,6 +37,9 @@ public class NBModel {
         
     }
     
+    /**
+     * train classification model - collects counts and calculates probabilites
+     */
     private void train(){
         HashMap<String, Double> phoebeCounts = new HashMap<>();
         HashMap<String, Double> michaelCounts = new HashMap<>();
@@ -94,6 +104,9 @@ public class NBModel {
         lukeLabel = lukeLabelCount/totalLabelCount;
     }
 
+    /**
+     * find the accuracy of our model
+     */
     private void test(){
         double phoebeLambda = lambda/(phoebeLabelCount + smoothingFactor);
         double michaelLambda = lambda/(michaelLabelCount + smoothingFactor);
@@ -147,6 +160,8 @@ public class NBModel {
                 matches++;
             }
         }
+
+        System.out.println("matches: " + matches);
     }
 
     public static void main(String[] args) {
