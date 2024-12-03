@@ -51,7 +51,6 @@ public class NBModel {
                     lukeLabelCount++;
                 }
 
-               
 
                 for(int i = 1; i < data.length; i++){
                     vocab.add(data[i]);
@@ -67,8 +66,6 @@ public class NBModel {
         } catch (IOException e){
             e.printStackTrace();
         }
-
-        System.out.println("phoebe, michael, luke " + phoebeCounts + " " + michaelCounts + " " + lukeCounts + "\n");
 
         double vocabSize = vocab.size();
         smoothingFactor = lambda*vocabSize;
@@ -150,10 +147,6 @@ public class NBModel {
                 matches++;
             }
         }
-
-        System.out.println("matches: " + matches);
-        System.out.println("actual labels: " + actualLabels.size());
-        System.out.println("with lambda: " + lambda + "\taccuracy is: " + matches/actualLabels.size());
     }
 
     public static void main(String[] args) {
