@@ -2,9 +2,9 @@ package lm;
 
 /**
  * 
- * Class to represent a range with lowest and highest n-gram probability. 
- * Has word associated with the range of probability.
+ * Class to represent a range with lowest and highest n-gram probability associated with a word.
  * 
+ * @author Grace Everts
  */
 public class Range {
     private double low;
