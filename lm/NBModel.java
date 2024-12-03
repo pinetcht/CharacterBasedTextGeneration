@@ -164,6 +164,5 @@ public class NBModel {
         new NBModel("data/training.txt", "data/test.txt", 0.001);
         new NBModel("data/training.txt", "data/test.txt", 0.0001);
         new NBModel("data/training.txt", "data/test.txt", 0.00001);
-        
     }
 }
