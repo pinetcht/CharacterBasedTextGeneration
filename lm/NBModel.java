@@ -161,7 +161,7 @@ public class NBModel {
             }
         }
 
-        System.out.println("matches: " + matches);
+        System.out.println("matches: " + matches + "\naccuracy: " + matches/actualLabels.size());
     }
 
     public static void main(String[] args) {
