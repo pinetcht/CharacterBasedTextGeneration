@@ -359,9 +359,9 @@ public class DiscountLMModel {
 	
 	public static void main(String[] args) {
 		ArrayList<String> characters = new ArrayList<>();
-		characters.add("luke");
+		characters.add("luke_skywalker");
 		characters.add("michael");
-		characters.add("phoebe");
+		characters.add("phoebe_buffay");
 		Random r = new Random();
 
 		// make separate character and dialogue file for human evaluation
@@ -372,7 +372,7 @@ public class DiscountLMModel {
 					String curCharacter = characters.get(randIndex);
 					charWriter.write(i + ": " + curCharacter + "\n");
 					
-					String filename = String.format("data/%s_dialogue.txt", curCharacter);
+					String filename = String.format("data/preprocessed/%s_preprocessed.txt", curCharacter);
 					DiscountLMModel test = new DiscountLMModel(filename, 0.5);
 					writer.write(i + ": " + test.generateParagraph() + "\n");
 					
