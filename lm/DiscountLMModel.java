@@ -17,7 +17,12 @@ public class DiscountLMModel {
 	private HashMap<String, Double> alpha = null;
 	private HashMap<String, ArrayList<Range>> wordDistributions = new HashMap<>();
 	
-
+	/**
+	 * parameterized constructor
+	 * 
+	 * @param filename a String; the name of the file we will be training our discount model on
+	 * @param discount a double; the discount of our model
+	 */
     public DiscountLMModel(String filename, double discount){
         this.discount = discount;
         this.filename = filename;
@@ -47,6 +52,11 @@ public class DiscountLMModel {
 		 fillAlpha();
 	}
 
+	/**
+	 * use bigram probabilities to generate a paragraph
+	 * 
+	 * @return a String - the paragraph we generated with model
+	 */
 	public String generateParagraph(){
 		Random r = new Random();
 		int numSentences = r.nextInt(50);
@@ -59,6 +69,11 @@ public class DiscountLMModel {
 		return paragraph;
 	}
 
+	/**
+	 * use bigram probabilities to generate sentence
+	 * 
+	 * @return a String - the sentence we generated
+	 */
 	public String generateSentence(){
 		String currentWord = "<s>";
 		Double curMaxProb = 0.0;
@@ -89,6 +104,16 @@ public class DiscountLMModel {
 		return finalSentence;
 	}
 
+	/**
+	 * search a list of pairs for a specific, randomly generated number, using
+	 * binary search
+	 * 
+	 * @param arr - an ArrayList of Range objects that we are searching
+	 * @param l - an int; the left bound of our current search scope
+	 * @param r - an int; the right bound of our current search scope
+	 * @param randNum - the random number that we generated. We are searching for this number in the ArrayList
+	 * @return a String, representing the word that correlates to randNum in arr
+	 */
 	String binarySearch(ArrayList<Range> arr, int l, int r, double randNum) { 
         if (r >= l)
         { 
